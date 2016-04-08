@@ -21,16 +21,16 @@ using namespace CocosDenshion;
 #define MUSIC_FILE		"Sounds/background.mp3"
 #endif // CC_PLATFORM_WIN32
 
-Scene* Main::createScene()
+Scene* MainScene::createScene()
 {
 	auto scene = Scene::create();
-	auto layer = Main::create();
+	auto layer = MainScene::create();
 	scene->addChild(layer);
 
 	return scene;
 }
 
-bool Main::init()
+bool MainScene::init()
 {
 	if (!LayerColor::initWithColor(Color4B(255, 255, 255, 255)))
 	{
@@ -38,6 +38,31 @@ bool Main::init()
 	}
 
 	/////////////////////////////
+	
+	pMenuItem1 = MenuItemImage::create(
+		"mainscene/btn-play.png",
+		"mainscene/btn-play-down.png",
+		CC_CALLBACK_1(MainScene::selectMenu,this));
+	
+
+	pMenuItem2 = MenuItemImage::create(
+		"mainscene/btn-about.png",
+		"mainscene/btn-about-down.png",
+		CC_CALLBACK_1(MainScene::selectMenu, this));
+	
+	pMenuItem1->setPosition(Vec2(240, 160));
+	pMenuItem2->setPosition(Vec2(240, 80));
+
+	auto pMenu = Menu::create(pMenuItem1, pMenuItem2, nullptr);
+	pMenu->setPosition(Vec2::ZERO);
+
+	this->addChild(pMenu);
+
 
 	return true;
+}
+
+void MainScene::selectMenu(Ref* pSender)
+{
+	log("111");
 }

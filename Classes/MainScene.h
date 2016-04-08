@@ -3,20 +3,20 @@
 
 #include "cocos2d.h"
 
-class Main : public cocos2d::LayerColor
+class MainScene : public cocos2d::LayerColor
 {
 public:
     static cocos2d::Scene* createScene();
 
     virtual bool init();
 
-    CREATE_FUNC(Main);
+    CREATE_FUNC(MainScene);
 
 
 	//Menu
-	cocos2d::Sprite* pMenuItem1;
-	cocos2d::Sprite* pMenuItem2;
-
+	cocos2d::MenuItemImage* pMenuItem1;
+	cocos2d::MenuItemImage* pMenuItem2;
+	void selectMenu(Ref* pSender);
 
 	//Sound
 	unsigned int m_nSoundId;

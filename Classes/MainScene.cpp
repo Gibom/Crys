@@ -50,9 +50,10 @@ bool MainScene::init()
 		"mainscene/btn-about-down.png",
 		CC_CALLBACK_1(MainScene::selectMenu, this));
 	
-	pMenuItem1->setPosition(Vec2(240, 160));
-	pMenuItem2->setPosition(Vec2(240, 80));
-
+	pMenuItem1->setPosition(Vec2(160, 220));
+	pMenuItem1->setScale(0.5f);
+	pMenuItem2->setPosition(Vec2(160, 180));
+	pMenuItem2->setScale(0.5f);
 	auto pMenu = Menu::create(pMenuItem1, pMenuItem2, nullptr);
 	pMenu->setPosition(Vec2::ZERO);
 

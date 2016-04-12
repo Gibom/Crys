@@ -17,18 +17,25 @@ public:
 	//Menu
 	cocos2d::MenuItemImage* pMenuItem1;
 	cocos2d::MenuItemImage* pMenuItem2;
-	void selectMenu(Ref* pSender);
+	void onPressPlay(Ref* pSender);
+	void onPressAbout(Ref* pSender);
 	
 	cocos2d::SpriteFrameCache* gem;
 	char str[100] = { 0 };
 	Vector<Sprite*> gem_;
-
+	Sprite* sprt;
+	Vec2 cmp;
+	
 	//Sound
 	unsigned int m_nSoundId;
 	void doSoundAction(Ref* pSender);
 	void onUpdate();
 	void showParticle();
 	void showGem(float dt);
+	void delGem(float dt);
+
+	
+	
 
 };
 

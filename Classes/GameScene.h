@@ -29,6 +29,8 @@ public:
 		float ySpeed;
 
 	}Gem;
+	Gem gem;
+
 	//------------------------------------------------------------------------------------
 	int kGemSize = 40;
 	int kBoardWidth = 8;

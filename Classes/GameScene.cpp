@@ -106,11 +106,12 @@ void GameScene::setupBoard()
 
 void GameScene::onUpdate(float dt)
 {
+	int x;
 	if (!gIsGameOver)
 	{
 		//removeMarkedGems();
 
-		int x;
+		
 
 
 		// Add falling gems
@@ -132,7 +133,7 @@ void GameScene::onUpdate(float dt)
 				gemSprite->setPosition(Vec2(x * kGemSize, kBoardHeight * kGemSize));
 				gemSprite->setAnchorPoint(Vec2(0, 0));
 
-				Gem gem;
+				
 				gem.gemType = gemType;
 				gem.gemSprite = gemSprite;
 				gem.yPos = kBoardHeight;
@@ -146,6 +147,58 @@ void GameScene::onUpdate(float dt)
 			}
 
 			gTimeSinceAddInColumn[x]++;
+		}
+	}
+
+	// Move falling gems
+	bool gemLanded = false;
+	for (x = 0; x < kBoardWidth; x++)
+	{
+		Gems &column = gFallingGems[x];
+		int numFallingGems = gFallingGems[x].size();
+		for (int i = numFallingGems - 1; i >= 0; i--)
+		{
+			Gem &gem = column[i];
+
+			gem.ySpeed += 0.06;
+			gem.ySpeed *= 0.99;
+			gem.yPos -= gem.ySpeed;
+
+			if (gem.yPos <= gNumGemsInColumn[x])
+			{
+				// The gem hit the ground or a fixed gem
+				//if (!gemLanded)
+				//{
+				//	SimpleAudioEngine::getInstance()->playEffect(String::createWithFormat("sounds/tap-%d.wav",
+				//		(rand() % 4))->getCString());
+				//	gemLanded = true;
+				//}
+
+				// Insert into board
+				int y = gNumGemsInColumn[x];
+
+				if (gBoard[x + y*kBoardWidth] != -1)
+				{
+					log(String::createWithFormat("Warning! Overwriting board idx: %d type: %d", x + y*kBoardWidth,
+						gBoard[x + y*kBoardWidth])->getCString());
+				}
+
+				gBoard[x + y*kBoardWidth] = gem.gemType;
+
+				gBoardSprites.pushBack(gem.gemSprite);
+					
+				// Update fixed position
+				gem.gemSprite->setPosition(x*kGemSize, y*kGemSize);
+				gNumGemsInColumn[x] ++;
+
+				gBoardChangedSinceEvaluation = true;
+				column.erase(column.begin() + i);
+			}
+			else
+			{
+				// Update the falling gems position
+				gem.gemSprite->setPosition(x*kGemSize, gem.yPos*kGemSize);
+			}
 		}
 	}
 }
